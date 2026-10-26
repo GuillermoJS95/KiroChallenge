@@ -1,0 +1,444 @@
+/* ===========================================================
+   Davante · DAW · Bienvenida a Kiro — estilo pixel art arcade
+   =========================================================== */
+
+:root {
+  /* Paleta arcade / fantasmas tipo Pac-Man */
+  --bg: #0b0320;
+  --bg-2: #130a33;
+  --ink: #fdf6e3;
+  --red: #ff2b43;      /* Blinky */
+  --pink: #ff8cc6;     /* Pinky  */
+  --cyan: #2ff3ff;     /* Inky   */
+  --orange: #ffab3d;   /* Clyde  */
+  --yellow: #ffe600;   /* Pac-Man / Kiro */
+  --green: #39ff14;
+  --panel: #1a0f3d;
+  --panel-border: #4b2fd6;
+  --maze-blue: #2121ff;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #241065 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 24px 14px 48px;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  image-rendering: pixelated;
+  overflow-x: hidden;
+}
+
+/* ---------- Campo de estrellas pixeladas ---------- */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #ffffff80 50%, transparent 51%),
+    radial-gradient(2px 2px at 120px 80px, #ffffff66 50%, transparent 51%),
+    radial-gradient(2px 2px at 220px 160px, #ffffff55 50%, transparent 51%),
+    radial-gradient(2px 2px at 320px 40px, #ffffff44 50%, transparent 51%),
+    radial-gradient(2px 2px at 420px 200px, #ffffff66 50%, transparent 51%);
+  background-size: 480px 260px;
+  animation: twinkle 4s steps(2) infinite;
+  opacity: 0.6;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+
+/* ---------- Pantalla principal ---------- */
+.screen {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* ---------- HUD superior ---------- */
+.hud { text-align: center; }
+
+.hud-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: var(--cyan);
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+.score { color: var(--yellow); }
+
+.blink { animation: blink 1s steps(2, start) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.title { margin: 0 0 18px; line-height: 1.5; }
+
+.title-line {
+  display: block;
+  text-shadow: 3px 3px 0 #00000080;
+}
+
+.title-davante {
+  font-size: clamp(22px, 7vw, 46px);
+  color: var(--yellow);
+  letter-spacing: 2px;
+  animation: hue 6s linear infinite;
+}
+
+.title-daw {
+  font-size: clamp(11px, 3.4vw, 20px);
+  color: var(--green);
+  margin-top: 10px;
+}
+
+@keyframes hue {
+  0%   { text-shadow: 3px 3px 0 var(--red); }
+  25%  { text-shadow: 3px 3px 0 var(--pink); }
+  50%  { text-shadow: 3px 3px 0 var(--cyan); }
+  75%  { text-shadow: 3px 3px 0 var(--orange); }
+  100% { text-shadow: 3px 3px 0 var(--red); }
+}
+
+/* ---------- Fantasmas estilo arcade (puro CSS) ---------- */
+.ghosts {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 14px;
+  margin: 8px 0 20px;
+  height: 46px;
+}
+
+.ghost {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 17px 17px 0 0;
+  animation: float 1.2s steps(2) infinite;
+  /* "pies" dentados del fantasma */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top/100% 70% no-repeat,
+    radial-gradient(circle at 17% 100%, #000 40%, transparent 41%) bottom left/33.4% 34% no-repeat,
+    radial-gradient(circle at 50% 100%, #000 40%, transparent 41%) bottom center/33.4% 34% no-repeat,
+    radial-gradient(circle at 83% 100%, #000 40%, transparent 41%) bottom right/33.4% 34% no-repeat;
+          mask:
+    linear-gradient(#000 0 0) top/100% 70% no-repeat,
+    radial-gradient(circle at 17% 100%, #000 40%, transparent 41%) bottom left/33.4% 34% no-repeat,
+    radial-gradient(circle at 50% 100%, #000 40%, transparent 41%) bottom center/33.4% 34% no-repeat,
+    radial-gradient(circle at 83% 100%, #000 40%, transparent 41%) bottom right/33.4% 34% no-repeat;
+}
+
+.ghost-red    { background: var(--red); }
+.ghost-pink   { background: var(--pink); animation-delay: .15s; }
+.ghost-cyan   { background: var(--cyan); animation-delay: .30s; }
+.ghost-orange { background: var(--orange); animation-delay: .45s; }
+
+/* Ojos del fantasma */
+.ghost .eyes,
+.ghost .eyes::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  width: 9px;
+  height: 11px;
+  background: #fff;
+  border-radius: 2px;
+}
+.ghost .eyes { left: 6px; }
+.ghost .eyes::after { left: 13px; }
+
+/* Pupilas */
+.ghost::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 10px;
+  width: 4px;
+  height: 4px;
+  background: var(--maze-blue);
+  box-shadow: 13px 0 0 var(--maze-blue);
+  z-index: 2;
+}
+
+/* Pac-Man / Kiro */
+.pacman {
+  width: 34px;
+  height: 34px;
+  background: var(--yellow);
+  border-radius: 50%;
+  position: relative;
+  animation: chomp .4s steps(2) infinite, float 1.2s steps(2) infinite;
+  clip-path: polygon(100% 25%, 44% 50%, 100% 75%, 100% 100%, 0 100%, 0 0, 100% 0);
+}
+
+@keyframes chomp {
+  0%, 100% { clip-path: polygon(100% 25%, 44% 50%, 100% 75%, 100% 100%, 0 100%, 0 0, 100% 0); }
+  50%      { clip-path: polygon(100% 50%, 44% 50%, 100% 50%, 100% 100%, 0 100%, 0 0, 100% 0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ---------- Mensaje de bienvenida ---------- */
+.welcome {
+  font-size: clamp(10px, 2.6vw, 14px);
+  line-height: 1.8;
+  color: var(--ink);
+  margin: 0;
+}
+.welcome strong { color: var(--yellow); }
+.welcome-sub {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: clamp(8px, 2vw, 10px);
+  color: var(--cyan);
+}
+
+/* ---------- Panel de tareas (ventana arcade) ---------- */
+.panel {
+  background: var(--panel);
+  border: 4px solid var(--panel-border);
+  border-radius: 6px;
+  padding: 20px 18px;
+  box-shadow:
+    0 0 0 4px #000,
+    0 0 24px #4b2fd680,
+    inset 0 0 0 2px #000;
+}
+
+.panel-title {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--yellow);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ---------- Formulario ---------- */
+.task-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.task-input {
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 9px;
+  padding: 12px 10px;
+  color: var(--ink);
+  background: #0c0724;
+  border: 3px solid var(--maze-blue);
+  border-radius: 4px;
+  outline: none;
+  letter-spacing: 1px;
+}
+.task-input::placeholder { color: #6b63a0; }
+.task-input:focus { border-color: var(--cyan); box-shadow: 0 0 10px #2ff3ff66; }
+
+.btn-add {
+  font-family: inherit;
+  font-size: 9px;
+  padding: 0 14px;
+  color: #0b0320;
+  background: var(--yellow);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #b8a600;
+  transition: transform .05s steps(1);
+}
+.btn-add:hover { background: #fff04d; }
+.btn-add:active { transform: translateY(4px); box-shadow: 0 0 0 #b8a600; }
+
+/* ---------- Filtros ---------- */
+.filters {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.filter {
+  flex: 1;
+  font-family: inherit;
+  font-size: 8px;
+  padding: 9px 4px;
+  color: var(--ink);
+  background: #0c0724;
+  border: 2px solid var(--panel-border);
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.filter:hover { border-color: var(--cyan); }
+.filter.is-active {
+  background: var(--panel-border);
+  color: var(--yellow);
+  border-color: var(--cyan);
+}
+
+/* ---------- Lista de tareas ---------- */
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 10px;
+  background: #0c0724;
+  border: 2px solid #2a1d66;
+  border-radius: 4px;
+  animation: popin .15s steps(2);
+}
+
+@keyframes popin {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.task-check {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  background: #0b0320;
+  border: 2px solid var(--green);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+}
+.task-check:checked { background: var(--green); }
+.task-check:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px; top: 0px;
+  width: 5px; height: 10px;
+  border: solid #0b0320;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.task-text {
+  flex: 1;
+  font-size: 9px;
+  line-height: 1.6;
+  color: var(--ink);
+  word-break: break-word;
+  letter-spacing: 1px;
+}
+.task-item.done .task-text {
+  color: #6b63a0;
+  text-decoration: line-through;
+}
+
+.task-del {
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: 10px;
+  width: 26px;
+  height: 26px;
+  color: var(--ink);
+  background: var(--red);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #a3001a;
+  transition: transform .05s steps(1);
+}
+.task-del:hover { background: #ff5068; }
+.task-del:active { transform: translateY(3px); box-shadow: 0 0 0 #a3001a; }
+
+/* ---------- Estado vacío ---------- */
+.empty-state {
+  display: none;
+  text-align: center;
+  font-size: 9px;
+  line-height: 1.8;
+  color: #6b63a0;
+  margin: 18px 0 6px;
+}
+.empty-state.show { display: block; }
+
+/* ---------- Pie del panel ---------- */
+.panel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 2px dashed #2a1d66;
+}
+.counter { font-size: 8px; color: var(--cyan); letter-spacing: 1px; }
+
+.btn-clear {
+  font-family: inherit;
+  font-size: 8px;
+  padding: 8px 10px;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid var(--orange);
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.btn-clear:hover { background: var(--orange); color: #0b0320; }
+
+/* ---------- Créditos ---------- */
+.credits {
+  text-align: center;
+  font-size: 7px;
+  color: #5b5290;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* ---------- Accesibilidad ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ghosts { gap: 8px; }
+  .ghost, .pacman { width: 26px; height: 26px; }
+  .hud-row { font-size: 7px; }
+}

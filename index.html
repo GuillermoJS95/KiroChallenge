@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Davante · DAW · Bienvenidos a Kiro</title>
+  <meta name="description" content="Instituto Davante · clase de DAW · lista de tareas pixel art para dar la bienvenida a Kiro." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Estrellas de fondo (generadas por CSS) -->
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="screen">
+    <header class="hud">
+      <div class="hud-row">
+        <span class="blink">INSERT COIN</span>
+        <span class="score">DAW · 1-UP</span>
+      </div>
+
+      <h1 class="title">
+        <span class="title-line title-davante">DAVANTE</span>
+        <span class="title-line title-daw">CLASE DE DAW</span>
+      </h1>
+
+      <!-- Fila de fantasmas tipo arcade -->
+      <div class="ghosts" aria-hidden="true">
+        <div class="ghost ghost-red"><span class="eyes"></span></div>
+        <div class="ghost ghost-pink"><span class="eyes"></span></div>
+        <div class="ghost ghost-cyan"><span class="eyes"></span></div>
+        <div class="ghost ghost-orange"><span class="eyes"></span></div>
+        <div class="pacman" title="Kiro"></div>
+      </div>
+
+      <p class="welcome">
+        ¡BIENVENIDOS, ALUMNOS!<br />
+        <span class="welcome-sub">A LA AVENTURA DE DESARROLLAR CON <strong>KIRO</strong></span>
+      </p>
+    </header>
+
+    <section class="panel" aria-labelledby="tasks-heading">
+      <h2 id="tasks-heading" class="panel-title">MISIONES DE CLASE</h2>
+
+      <form id="task-form" class="task-form" autocomplete="off">
+        <label class="sr-only" for="task-input">Nueva tarea</label>
+        <input
+          id="task-input"
+          class="task-input"
+          type="text"
+          placeholder="ESCRIBE UNA MISIÓN..."
+          maxlength="120"
+          required
+        />
+        <button type="submit" class="btn-add">+ ADD</button>
+      </form>
+
+      <div class="filters" role="tablist" aria-label="Filtrar tareas">
+        <button class="filter is-active" data-filter="all" role="tab">TODAS</button>
+        <button class="filter" data-filter="active" role="tab">PENDIENTES</button>
+        <button class="filter" data-filter="done" role="tab">HECHAS</button>
+      </div>
+
+      <ul id="task-list" class="task-list" aria-live="polite"></ul>
+
+      <p id="empty-state" class="empty-state">
+        NO HAY MISIONES TODAVÍA.<br />¡AÑADE LA PRIMERA!
+      </p>
+
+      <footer class="panel-footer">
+        <span id="counter" class="counter">0 PENDIENTES</span>
+        <button id="clear-done" class="btn-clear" type="button">LIMPIAR HECHAS</button>
+      </footer>
+    </section>
+
+    <p class="credits">
+      PIXEL ARCADE · DAVANTE × AWS · KIRO CHALLENGE
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
