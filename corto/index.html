@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Las Crónicas de Davante · Cortometraje</title>
+  <meta name="description" content="Cortometraje animado de fantasía: el Reino de Davante, la Orden de DAW y el espíritu guía Kiro. Música y animación en el navegador." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="film" id="film">
+
+    <!-- Lienzo de escenas (se van activando por tiempo) -->
+    <div class="stage" id="stage">
+
+      <!-- ESCENA 0 · Cielo estrellado + título -->
+      <section class="scene" data-scene="0">
+        <div class="sky">
+          <div class="stars-far"></div>
+          <div class="stars-near"></div>
+          <div class="moon"></div>
+        </div>
+        <div class="silhouette castle"></div>
+        <div class="center-text">
+          <span class="kicker">Reino de Davante presenta</span>
+          <h1 class="big-title">Las Crónicas<br/>de Davante</h1>
+        </div>
+      </section>
+
+      <!-- ESCENA 1 · La academia al amanecer -->
+      <section class="scene" data-scene="1">
+        <div class="sky dawn"></div>
+        <div class="sun"></div>
+        <div class="hills"></div>
+        <div class="silhouette academy"></div>
+      </section>
+
+      <!-- ESCENA 2 · Aparece Kiro, el espíritu guía -->
+      <section class="scene" data-scene="2">
+        <div class="sky arcane"></div>
+        <div class="runes" aria-hidden="true"></div>
+        <div class="ghost-kiro" id="kiro">
+          <div class="kiro-body">
+            <span class="kiro-eye left"></span>
+            <span class="kiro-eye right"></span>
+          </div>
+          <div class="kiro-glow"></div>
+        </div>
+      </section>
+
+      <!-- ESCENA 3 · El grimorio del código / la Orden de DAW -->
+      <section class="scene" data-scene="3">
+        <div class="sky arcane deep"></div>
+        <div class="grimoire">
+          <div class="page left"></div>
+          <div class="page right">
+            <span class="code-line"></span>
+            <span class="code-line"></span>
+            <span class="code-line"></span>
+            <span class="code-line"></span>
+          </div>
+          <div class="grimoire-glow"></div>
+        </div>
+      </section>
+
+      <!-- ESCENA 4 · El despertar / clímax -->
+      <section class="scene" data-scene="4">
+        <div class="sky arcane"></div>
+        <div class="burst" id="burst"></div>
+        <div class="silhouette castle lit"></div>
+        <div class="floating-sigils" aria-hidden="true"></div>
+      </section>
+
+      <!-- ESCENA 5 · Cierre -->
+      <section class="scene" data-scene="5">
+        <div class="sky"></div>
+        <div class="stars-far"></div>
+        <div class="center-text">
+          <h2 class="end-title">Tu leyenda comienza ahora</h2>
+          <span class="end-sub">Orden de los Arcanos del Desarrollo · DAW</span>
+          <span class="end-brand">Davante × AWS · Kiro Challenge</span>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Subtítulos narrativos -->
+    <div class="subtitle" id="subtitle" aria-live="polite"></div>
+
+    <!-- Overlay de inicio -->
+    <div class="poster" id="poster">
+      <div class="poster-inner">
+        <div class="poster-crest">✦</div>
+        <h1 class="poster-title">Las Crónicas de Davante</h1>
+        <p class="poster-sub">Un cortometraje del Reino Arcano</p>
+        <button class="play-btn" id="play-btn" aria-label="Reproducir">▶ Reproducir</button>
+        <p class="poster-hint">Con sonido · aprox. 1 min</p>
+      </div>
+    </div>
+
+    <!-- Barra de reproducción -->
+    <div class="controls" id="controls" hidden>
+      <button class="ctrl-btn" id="replay-btn" title="Repetir">↺</button>
+      <div class="track"><span id="track-fill"></span></div>
+      <button class="ctrl-btn" id="mute-btn" title="Silenciar">♪</button>
+    </div>
+
+  </div>
+
+  <script src="film.js"></script>
+</body>
+</html>
